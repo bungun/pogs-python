@@ -1,0 +1,19 @@
+# C/C++ libs/archives #
+*.a
+*.o
+*.so
+*.dylib
+
+# Compiled python #
+*.pyc
+
+# Python package
+/build*
+*.egg-info
+
+# Markdown preview
+README.html
+
+# License/copright text (for now) #
+*LICENSE
+*copyright.txt
