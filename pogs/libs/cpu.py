@@ -4,13 +4,13 @@ from pogs.types.low_level import c_int_p, c_float_p, c_double_p, settings_s_p, s
 from subprocess import check_output
 
 ext = ".dylib" if os.uname()[0] == "Darwin" else ".so"
-lib = "libpogs" + ext
+# this covers site-packages/<lib> (OSX) and dist-packages/<lib> (Linux)
+lib = "packages/libpogs" + ext
 lib_path=check_output(['locate', lib])
-if lib_path[-1]=='\n': lib_path=lib_path[:-1]
 
 try:
+	if lib_path[-1]=='\n': lib_path=lib_path[:-1]
 	pogsCPU = CDLL(lib_path)
-
 
 	#argument types
 	pogsCPU.pogs_init_dense_single.argtypes = [c_int, c_size_t, c_size_t, c_float_p]
