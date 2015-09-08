@@ -1,7 +1,6 @@
 from pogs.libs.cpu import pogsCPU
 from pogs.solvers.base import BaseSolver
 
-
 if not pogsCPU:
 	print '\nWarning: Cannot create a POGS CPU Solver instance without linking Python module to a compiled POGS CPU libirary'
 	print '> Setting pogs.SolverCPU=None'

@@ -1,11 +1,12 @@
 import os
 from ctypes import CDLL, c_int, c_size_t, c_void_p
 from pogs.types.low_level import c_int_p, c_float_p, c_double_p, settings_s_p, settings_d_p, solution_s_p, solution_d_p, info_s_p, info_d_p
-
+from subprocess import check_output
 
 ext = ".dylib" if os.uname()[0] == "Darwin" else ".so"
-lib_path = os.path.join(os.path.dirname(__file__),"../../pypogs_gpu" + ext)
-
+lib = "pypogs_gpu" + ext
+lib_path=check_output(['locate', lib])
+if lib_path[-1]=='\n': lib_path=lib_path[:-1]
 
 try:
 	pogsGPU = CDLL(lib_path)
