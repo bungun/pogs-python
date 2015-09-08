@@ -34,7 +34,7 @@ STATUS[5]='POGS_ERROR'
 # Default POGS solver settings
 DEFAULTS={}
 DEFAULTS['rho']=1. # rho = 1.0
-DEFAULTS['abs_tol']=1e-4 # abs_tol = 1e-2
+DEFAULTS['abs_tol']=1e-4 # abs_tol = 1e-4
 DEFAULTS['rel_tol']=1e-4 # rel_tol = 1e-4
 DEFAULTS['max_iters']=2500 # max_iters = 2500
 DEFAULTS['verbose']=2 # verbose = 2

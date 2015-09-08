@@ -5,7 +5,7 @@ from subprocess import check_output
 
 ext = ".dylib" if os.uname()[0] == "Darwin" else ".so"
 # this covers site-packages/<lib> (OSX) and dist-packages/<lib> (Linux)
-lib = "packages/libpogs" + ext
+lib = "packages/pypogs_gpu" + ext
 lib_path=check_output(['locate', lib])
 
 try:
@@ -39,7 +39,7 @@ try:
 	pogsGPU.pogs_finish_double.restype = None
 
 	print '\nLoaded POGS GPU library.'
-except:
+except OSError:
 	print '\nWarning: POGS GPU shared object (dynamic library) not found at ' + lib_path
 	pogsGPU=None
 
