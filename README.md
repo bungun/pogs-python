@@ -50,7 +50,7 @@ $ export PATH=$PATH:<path-to-cuda-bin>
 In the shell, navigate to the directory:
 
 ```bash
-$ cd("<path-to-pogs-python>")
+$ cd <path-to-pogs-python>
 ```
 
 If desired, create a virtual environment before the installation step (https://virtualenv.pypa.io/en/latest/).

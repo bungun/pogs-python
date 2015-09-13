@@ -39,7 +39,7 @@ try:
 	pogsGPU.pogs_finish_double.restype = None
 
 	print '\nLoaded POGS GPU library.'
-except OSError:
+except (OSError, IndexError):
 	print '\nWarning: POGS GPU shared object (dynamic library) not found at ' + lib_path
 	pogsGPU=None
 

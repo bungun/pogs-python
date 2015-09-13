@@ -39,7 +39,7 @@ try:
 	pogsCPU.pogs_finish_double.restype = None
 
 	print '\nLoaded POGS CPU library'
-except OSError:
+except (OSError, IndexError):
 	print '\nWarning: POGS CPU shared object (dynamic library) not found at ' + lib_path
 	pogsCPU=None
 
