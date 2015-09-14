@@ -89,6 +89,11 @@ class BaseSolver(object):
 										cptr(f.d,c_double), cptr(f.e,c_double), cptr(f.h,c_int),
 										cptr(g.a,c_double), cptr(g.b,c_double), cptr(g.c,c_double),
 										cptr(g.d,c_double), cptr(g.e,c_double), cptr(g.h,c_int))
+
+			# update primal and dual variables to be exactly feasible
+			self.pysolution.y=self.A.dot(self.pysolution.x)
+			self.pysolution.mu=self.A.T.dot(self.pysolution.nu)
+
 			 
 		except AssertionError:
 			print "\nf and g must be objects of type FunctionVector with:"

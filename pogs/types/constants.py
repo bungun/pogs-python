@@ -1,5 +1,7 @@
 from ctypes import c_int
 
+
+
 # POGS constants
 ORD = {}
 ORD["COL_MAJ"]=c_int(0)
@@ -39,5 +41,5 @@ DEFAULTS['rel_tol']=1e-4 # rel_tol = 1e-4
 DEFAULTS['max_iters']=2500 # max_iters = 2500
 DEFAULTS['verbose']=2 # verbose = 2
 DEFAULTS['adaptive_rho']=1 # adaptive_rho = True
-DEFAULTS['gap_stop']=1 # gap_stop = True
+DEFAULTS['gap_stop']=0 # gap_stop = false
 DEFAULTS['warm_start']=	0 # warm_start = False
