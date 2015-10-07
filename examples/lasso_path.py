@@ -50,6 +50,7 @@ def LassoPath(m, n, gpu=False, double_precision=False, nlambda=50):
 
 
   # store results for comparison 
+  x_curr = zeros(n)
   x_prev = zeros(n)
 
   # timer
@@ -58,9 +59,9 @@ def LassoPath(m, n, gpu=False, double_precision=False, nlambda=50):
   # use problem data A to create solver 
   s = Solver(A) 
 
-  for i in xrange(nlambda):
-    _lambda= exp( (log(lambda_max)*(nlambda-1-i)+1e-2*log(lambda_max)*i )/ (nlambda-1))
+  lambdas=[exp(log(lambda_max)*(1- 0.99*i/(nlambda-1))) for i in xrange(nlambda)]
 
+  for _lambda in lambdas:
     g.c[:]=_lambda
 
     # solve
@@ -70,10 +71,11 @@ def LassoPath(m, n, gpu=False, double_precision=False, nlambda=50):
     runtime += s.info.solvetime
 
     # copy
-    x_curr=s.solution.x
+    x_curr[:]=s.solution.x[:]
 
     # check stopping condition
     if max(abs(x_prev-x_curr)) < 1e-3* sum(abs(x_curr)):
+      print "breaking"
       break
     
     x_prev[:]=x_curr[:]

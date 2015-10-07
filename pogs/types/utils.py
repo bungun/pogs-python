@@ -49,10 +49,14 @@ def change_solution(pysolution, **kwargs):
 def make_solution(pysolution):
 	if pysolution.double_precision:
 		return SolutionD(cptr(pysolution.x,c_double),cptr(pysolution.y,c_double),
-							cptr(pysolution.mu,c_double),cptr(pysolution.nu,c_double))
+							cptr(pysolution.mu,c_double),cptr(pysolution.nu,c_double),
+							cptr(pysolution.x12,c_double),cptr(pysolution.y12,c_double),
+							cptr(pysolution.mu12,c_double),cptr(pysolution.nu12,c_double))
 	else:
 		return SolutionS(cptr(pysolution.x,c_float),cptr(pysolution.y,c_float),
-		 					cptr(pysolution.mu,c_float),cptr(pysolution.nu,c_float))
+		 					cptr(pysolution.mu,c_float),cptr(pysolution.nu,c_float),
+							cptr(pysolution.x12,c_float),cptr(pysolution.y12,c_float),
+							cptr(pysolution.mu12,c_float),cptr(pysolution.nu12,c_float))
 
 		
 def make_info(double_precision):

@@ -9,10 +9,13 @@ class Solution(object):
 		self.y=zeros(m,dtype=T)
 		self.mu=zeros(n,dtype=T)
 		self.nu=zeros(m,dtype=T)
-
+		self.x12=zeros(n,dtype=T)
+		self.y12=zeros(m,dtype=T)
+		self.mu12=zeros(n,dtype=T)
+		self.nu12=zeros(m,dtype=T)
 
 class FunctionVector(object):
-	def __init__(self, length, double_precision=False):
+	def __init__(self, length, double_precision=False,**kwargs):
 		T = c_double if double_precision else c_float
 		self.a = ones(length,T)
 		self.b = zeros(length,T)
@@ -22,24 +25,44 @@ class FunctionVector(object):
 		self.h = zeros(length, c_int)
 		self.double_precision = double_precision
 
+		# list of attributes and symbols
+		attr_sym=[(self.a,'a'),
+				  (self.b,'b'),
+				  (self.c,'c'),
+				  (self.d,'d'),
+				  (self.e,'e'),
+				  (self.h,'h')]
+
+		# optional instantiation with keyword arguments
+		for s in attr_sym:
+			if s[1] in kwargs: 
+				vals=kwargs[s[1]]
+				# instatiation with a vector
+				try:
+					assert(len(vals)==length)
+					s[0][:]=vals[:]
+				# instantiation with a scalar (fill)
+				except TypeError:
+					s[0][:]=vals
+
+
+
 	def length(self):
 		return len(self.a)
 
+	def copy(dest,source):
+		dest.a[:]=source.a[:]
+		dest.b[:]=source.b[:]
+		dest.c[:]=source.c[:]
+		dest.d[:]=source.d[:]
+		dest.e[:]=source.e[:]
+		dest.h[:]=source.h[:]		
+
 	def copyfrom(self,f):
-		self.a[:]=f.a[:]
-		self.b[:]=f.b[:]
-		self.c[:]=f.c[:]
-		self.d[:]=f.d[:]
-		self.e[:]=f.e[:]
-		self.h[:]=f.h[:]
+		copy(self,f)
 
 	def copyto(self,f):
-		f.a[:]=self.a[:]
-		f.b[:]=self.b[:]
-		f.c[:]=self.c[:]
-		f.d[:]=self.d[:]
-		f.e[:]=self.e[:]
-		f.h[:]=self.h[:]
+		copy(f,self)
 
 
 	def to_double(self):
@@ -52,7 +75,7 @@ class FunctionVector(object):
 
 	def to_float(self):
 		if self.double_precision:
-			f=FunctionVector(self.length())
+			FunctionVector(self.length())
 			self.copyto(f)
 			return f 
 		else:
