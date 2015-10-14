@@ -101,7 +101,7 @@ class BaseSolver(object):
 			print ">length of g = n, # of columns in solver's data matrix A"
 
 	 
-	def finish(self):
+	def finish(self, verbose=True):
 		if not self.work:
 			print "no viable POGS_work pointer to call finish(). call Solver.init( args... ) first"
 			pass
@@ -111,7 +111,8 @@ class BaseSolver(object):
 		else:
 			self.lib.pogs_finish_double(self.work)
 			self.work = None
-		print "shutting down... POGS_work freed in C++"
+		if verbose:
+			print "shutting down... POGS_work freed in C++"
 
 	def __delete__(self):
 		self.finish()

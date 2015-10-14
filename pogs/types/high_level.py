@@ -59,10 +59,10 @@ class FunctionVector(object):
 		dest.h[:]=source.h[:]		
 
 	def copyfrom(self,f):
-		copy(self,f)
+		self.copy(self,f)
 
 	def copyto(self,f):
-		copy(f,self)
+		self.copy(f,self)
 
 
 	def to_double(self):
