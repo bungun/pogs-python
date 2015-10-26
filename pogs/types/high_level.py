@@ -9,10 +9,6 @@ class Solution(object):
 		self.y=zeros(m,dtype=T)
 		self.mu=zeros(n,dtype=T)
 		self.nu=zeros(m,dtype=T)
-		self.x12=zeros(n,dtype=T)
-		self.y12=zeros(m,dtype=T)
-		self.mu12=zeros(n,dtype=T)
-		self.nu12=zeros(m,dtype=T)
 
 class FunctionVector(object):
 	def __init__(self, length, double_precision=False,**kwargs):
@@ -50,13 +46,14 @@ class FunctionVector(object):
 	def length(self):
 		return len(self.a)
 
-	def copy(dest,source):
+	def copy(self, dest, source):
 		dest.a[:]=source.a[:]
 		dest.b[:]=source.b[:]
 		dest.c[:]=source.c[:]
 		dest.d[:]=source.d[:]
 		dest.e[:]=source.e[:]
 		dest.h[:]=source.h[:]		
+
 
 	def copyfrom(self,f):
 		self.copy(self,f)
@@ -73,11 +70,19 @@ class FunctionVector(object):
 			self.copyto(f)
 			return f
 
-	def to_float(self):
+	def to_single(self):
 		if self.double_precision:
 			FunctionVector(self.length())
 			self.copyto(f)
 			return f 
 		else:
 			return self
+
+	def deepcopy(self, double_precision=None):
+		if double_precision is None:
+			double_precision = self.double_precision
+		if double_precision:
+			return self.to_double()
+		else:
+			return self.to_single()
 

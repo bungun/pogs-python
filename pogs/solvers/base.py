@@ -66,6 +66,10 @@ class BaseSolver(object):
 			assert f.length()==self.m
 			assert g.length()==self.n
 
+			ftemp = f
+			gtemp = g
+
+
 			# pass previous rho through, if not first run (rho=0)
 			if self.info.rho>0:
 				self.settings.rho=self.info.rho
@@ -78,22 +82,25 @@ class BaseSolver(object):
 				print "no viable POGS_work pointer to call solve(). call Solver.init( args... ) first"
 				return 
 			elif not self.double_precision:
+				f = f.to_single()
+				g = g.to_single()
 				self.lib.pogs_solve_single(self.work, pointer(self.settings), pointer(self.solution), pointer(self.info),
 										cptr(f.a,c_float), cptr(f.b,c_float), cptr(f.c,c_float), 
 										cptr(f.d,c_float), cptr(f.e,c_float), cptr(f.h,c_int),
 										cptr(g.a,c_float), cptr(g.b,c_float), cptr(g.c,c_float),
 										cptr(g.d,c_float), cptr(g.e,c_float), cptr(g.h,c_int))
 			else:
+				f = f.to_double()
+				g = g.to_double()
 				self.lib.pogs_solve_double(self.work, pointer(self.settings), pointer(self.solution), pointer(self.info), 
 										cptr(f.a,c_double), cptr(f.b,c_double), cptr(f.c,c_double), 
 										cptr(f.d,c_double), cptr(f.e,c_double), cptr(f.h,c_int),
 										cptr(g.a,c_double), cptr(g.b,c_double), cptr(g.c,c_double),
 										cptr(g.d,c_double), cptr(g.e,c_double), cptr(g.h,c_int))
 
-			# update primal and dual variables to be exactly feasible
-			self.pysolution.y=self.A.dot(self.pysolution.x)
-			self.pysolution.mu=self.A.T.dot(self.pysolution.nu)
 
+			f = ftemp
+			g = gtemp
 			 
 		except AssertionError:
 			print "\nf and g must be objects of type FunctionVector with:"

@@ -45,21 +45,13 @@ class SolutionS(Structure):
 	_fields_ = [('x', c_float_p), 
 				('y', c_float_p), 
 				('mu', c_float_p), 
-				('nu', c_float_p),
-				('x12', c_float_p), 
-				('y12', c_float_p), 
-				('mu12', c_float_p), 
-				('nu12', c_float_p)]
+				('nu', c_float_p)]
 
 class SolutionD(Structure):
 	_fields_ = [('x', c_double_p), 
 				('y',c_double_p), 
 				('mu',c_double_p), 
-				('nu',c_double_p),
-				('x12', c_double_p), 
-				('y12',c_double_p), 
-				('mu12',c_double_p), 
-				('nu12',c_double_p)]
+				('nu',c_double_p)]
 
 # pointers to POGS types
 settings_s_p = POINTER(SettingsS)
